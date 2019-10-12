@@ -11,8 +11,11 @@
   </description>
 
   <modules>
+    <module>provided</module>
     <module>share</module>
+    <module>share1</module>
     <module>client</module>
+    <module>client1</module>
     <module>server</module>
     <module>webstart</module>
   </modules>

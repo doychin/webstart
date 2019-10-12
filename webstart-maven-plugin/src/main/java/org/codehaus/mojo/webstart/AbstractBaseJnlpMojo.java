@@ -205,6 +205,12 @@ public abstract class AbstractBaseJnlpMojo
     private Map<String, String> updateManifestEntries;
 
     /**
+     * Controls how to treat existing keys in jar manifest.
+     */
+    @Parameter(defaultValue = "true")
+    private boolean overrideDuplicateManifestKeys;
+
+    /**
      * Compile class-path elements used to search for the keystore
      * (if kestore location was prefixed by {@code classpath:}).
      *
@@ -285,6 +291,11 @@ public abstract class AbstractBaseJnlpMojo
      */
     @Component( hint = "default" )
     private JarUtil jarUtil;
+
+    public JarUtil getJarUtil()
+    {
+        return jarUtil;
+    }
 
     /**
      * All dependency filename strategy indexed by their role-hint.
@@ -867,7 +878,11 @@ public abstract class AbstractBaseJnlpMojo
         {
             verboseLog( "Update manifest " + toProcessFile( unprocessedJarFile ).getName() );
 
-            jarUtil.updateManifestEntries( unprocessedJarFile, updateManifestEntries );
+            if (canUnsign || !isJarSigned(unprocessedJarFile))
+            {
+                jarUtil.updateManifestEntries(unprocessedJarFile, updateManifestEntries,
+                    overrideDuplicateManifestKeys);
+            }
         }
     }
 
@@ -1008,7 +1023,7 @@ public abstract class AbstractBaseJnlpMojo
                 }
                 verboseLog( "Remove signature " + toProcessFile( jarFile ).getName() );
 
-                signTool.unsign( jarFile, isVerbose() );
+                unsign(jarFile);
             }
             else
             {
@@ -1020,6 +1035,12 @@ public abstract class AbstractBaseJnlpMojo
         ioUtil.removeDirectory( tempDir );
 
         return jarFiles.length; // FIXME this is wrong. Not all jars are signed.
+    }
+
+    protected void unsign(File jarFile)
+        throws MojoExecutionException
+    {
+        signTool.unsign(jarFile, isVerbose());
     }
 
     private ClassLoader getCompileClassLoader()

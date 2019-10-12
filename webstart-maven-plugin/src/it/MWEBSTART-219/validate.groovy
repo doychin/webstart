@@ -58,7 +58,7 @@ expectedFiles.each{
 File explodedWebstart = new File( target, "webapp/webstart" )
 assert assertExistsDirectory( explodedWebstart )
 
-expectedFiles = ["launch1.jnlp", "launch2.jnlp"]
+expectedFiles = ["launch1.jnlp", "launch2.jnlp", "launch3.jnlp"]
 expectedFiles.each{
  assert assertExistsFile( new File ( explodedWebstart, it ) )
 }
@@ -67,8 +67,24 @@ File file = new File( explodedWebstart, "launch1.jnlp" )
 String content = file.text
 
 String[] expectedContains = [ "<jar href=\"lib/share-1.0-SNAPSHOT.jar\"/>", "<jar href=\"lib/client-1.0-SNAPSHOT.jar\" main=\"true\"/>" ]
-expectedContains.each{
-  assert assertContains( content,  it )
+expectedContains.each {
+    assert assertContains(content, it)
+}
+
+file = new File( explodedWebstart, "launch2.jnlp" )
+content = file.text
+
+expectedContains = [ "<jar href=\"lib/share-1.0-SNAPSHOT.jar\"/>", "<jar href=\"lib/client.jar\" version=\"1.0-SNAPSHOT\" main=\"true\"/>" ]
+expectedContains.each {
+    assert assertContains(content, it)
+}
+
+file = new File( explodedWebstart, "launch3.jnlp" )
+content = file.text
+
+expectedContains = [ "<jar href=\"lib/share-1.0-SNAPSHOT.jar\"/>", "<jar href=\"lib/client1.jar\" version=\"1.0-SNAPSHOT\" main=\"true\"/>" ]
+expectedContains.each {
+    assert assertContains(content, it)
 }
 
 assert explodedWebstart.list().length == expectedFiles.length + 1
@@ -76,7 +92,7 @@ assert explodedWebstart.list().length == expectedFiles.length + 1
 File explodedWebstartlib = new File( target, "webapp/webstart/lib" )
 assert assertExistsDirectory( explodedWebstartlib )
 
-expectedFiles = [ "client-1.0-SNAPSHOT.jar", "share-1.0-SNAPSHOT.jar", "version.xml" ]
+expectedFiles = [ "client-1.0-SNAPSHOT.jar", "client1-1.0-SNAPSHOT.jar", "share-1.0-SNAPSHOT.jar", "share1-1.0-SNAPSHOT.jar", "version.xml" ]
 expectedFiles.each{
  assert assertExistsFile( new File ( explodedWebstartlib, it ) )
 }

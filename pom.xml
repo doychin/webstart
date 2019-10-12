@@ -10,7 +10,7 @@
 
   <groupId>org.codehaus.mojo</groupId>
   <artifactId>webstart</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0-DSOFT-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>MWEBSTART :: Project</name>
@@ -104,6 +104,14 @@
       <id>github</id>
       <url>scm:git:git@github.com:mojohaus/webstart.git</url>
     </site>
+    <snapshotRepository>
+      <url>https://maven.dsoft-bg.com/artifactory/plugins-snapshot-local</url>
+      <id>dsoft-plugins-snapshot</id>
+    </snapshotRepository>
+    <repository>
+      <url>https://maven.dsoft-bg.com/artifactory/plugins-release-local</url>
+      <id>dsoft-plugins</id>
+    </repository>
   </distributionManagement>
 
   <properties>

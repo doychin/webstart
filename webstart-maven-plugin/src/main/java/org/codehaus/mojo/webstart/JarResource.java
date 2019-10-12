@@ -20,6 +20,7 @@ package org.codehaus.mojo.webstart;
  */
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * This class represents a &lt;jarResource&gt; configuration element from the
@@ -44,7 +45,11 @@ public class JarResource
 
     private String mainClass;
 
+    @Parameter( defaultValue = "true" )
     private boolean outputJarVersion = true;
+
+    @Parameter( defaultValue = "true" )
+    private boolean transitiveOutputVersions = true;
 
     private boolean includeInJnlp = true;
 
@@ -54,6 +59,15 @@ public class JarResource
      * The hrefValue to fill in JarResource file.
      */
     private String hrefValue;
+
+    public JarResource()
+    {
+    }
+
+    public JarResource( boolean outputJarVersion )
+    {
+        this.outputJarVersion = outputJarVersion;
+    }
 
     /**
      * Returns the value of the artifactId field.
@@ -174,13 +188,23 @@ public class JarResource
         return hrefValue;
     }
 
+    public boolean isTransitiveOutputVersions()
+    {
+        return transitiveOutputVersions;
+    }
+
+    public void setTransitiveOutputVersions( boolean transitiveOutputVersions )
+    {
+        this.transitiveOutputVersions = transitiveOutputVersions;
+    }
+
     /**
      * {@inheritDoc}
      */
     public String toString()
     {
         return "JarResource[ groupId='" + this.groupId + "', artifactId='" + this.artifactId + "', version='" +
-                this.version + "', classifier='" + this.classifier + "', mainClass='" + this.mainClass +
-                "', outputJarVersion='" + this.outputJarVersion + "' ]";
+               this.version + "', classifier='" + this.classifier + "', mainClass='" + this.mainClass +
+               "', outputJarVersion='" + this.outputJarVersion + "', transitiveOutputVersions='" + transitiveOutputVersions + "' ]";
     }
 }

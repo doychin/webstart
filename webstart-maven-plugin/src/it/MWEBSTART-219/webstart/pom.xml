@@ -77,7 +77,20 @@
 									<artifactId>client</artifactId>
 									<version>${project.version}</version>
 									<mainClass>org.mycompany.webstart.HelloWorld2</mainClass>
-									<outputJarVersion>false</outputJarVersion>
+									<outputJarVersion>true</outputJarVersion>
+								</jarResource>
+							</jarResources>
+						</jnlpFile>
+						<jnlpFile>
+							<templateFilename>jnlpTemplate.vm</templateFilename>
+							<outputFilename>launch3.jnlp</outputFilename>
+							<jarResources>
+								<jarResource>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>client1</artifactId>
+									<version>${project.version}</version>
+									<mainClass>org.mycompany.webstart.HelloWorld2</mainClass>
+									<outputJarVersion>true</outputJarVersion>
 								</jarResource>
 							</jarResources>
 						</jnlpFile>
